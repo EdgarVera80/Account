@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import mx.com.account.manager.exception.EncryptException;
 
+
 /**
  * 
  * @author Edgar Angel Vera del Rio.

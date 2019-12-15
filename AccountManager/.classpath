@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_181"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Workspace/GitHub/Account/Comun Libs/sqlite-jdbc-3.27.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Workspace/GitHub/Account/Comun Libs/log4j-1.2.17.jar"/>
-	<classpathentry kind="lib" path="C:/Workspace/GitHub/Account/Comun Libs/commons-codec-1.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/GitHub/Account/Comun Libs/commons-codec-1.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/GitHub/Account/Comun Libs/log4j-1.2.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/GitHub/Account/Comun Libs/sqlite-jdbc-3.27.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

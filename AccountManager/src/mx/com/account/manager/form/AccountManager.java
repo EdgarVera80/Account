@@ -291,7 +291,6 @@ public class AccountManager {
 		
 		Object[][] rowData =getData();
 		
-		
 		model = new DefaultTableModel(rowData, columnNames) {
 			/**
 			 * 
