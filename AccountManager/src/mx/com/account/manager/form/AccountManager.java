@@ -48,6 +48,9 @@ import mx.com.account.manager.util.Utils;
 public class AccountManager {
 	private static final Logger LOGGER = Logger.getLogger(AccountManager.class);
 	
+	private static final String ERROR_TEXT="Error";
+	private static final String MENSAGE_TEXT="Mensaje";
+	
 	private JFrame frame;
 	private JTextField txtFilter;
 	private DefaultTableModel model;
@@ -86,7 +89,7 @@ public class AccountManager {
 					window.frame.setLocationRelativeTo(null);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					LOGGER.error("Error",e);
+					LOGGER.error(ERROR_TEXT,e);
 				}
 			}
 		});
@@ -224,7 +227,7 @@ public class AccountManager {
 						loadTable();
 					}
 				}else{
-					JOptionPane.showMessageDialog(frame, "Debe seleccionar un registro!", "Mensaje",Utils.MESSAGE_WARNING);
+					JOptionPane.showMessageDialog(frame, "Debe seleccionar un registro!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 				}
 			}
 		});
@@ -244,12 +247,12 @@ public class AccountManager {
 							accountService.removeAccount(id);
 							loadTable();
 						} catch (ServiceException e1) {
-							LOGGER.error("Error",e1);
-							JOptionPane.showMessageDialog(frame, "Ocurrió un error al intentar recuperar las Cuentas!", "Mensaje",Utils.MESSAGE_ERROR);
+							LOGGER.error(ERROR_TEXT,e1);
+							JOptionPane.showMessageDialog(frame, "Ocurrió un error al intentar recuperar las Cuentas!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 						}
 					}				
 				}else{
-					JOptionPane.showMessageDialog(frame, "Debe seleccionar un registro!", "Mensaje",Utils.MESSAGE_WARNING);
+					JOptionPane.showMessageDialog(frame, "Debe seleccionar un registro!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 				}
 			}
 		});
@@ -299,14 +302,13 @@ public class AccountManager {
 			private static final long serialVersionUID = 1L;
 
 			@Override 
-		    public boolean isCellEditable(int row, int column)
-		    {
+		    public boolean isCellEditable(int row, int column){
 		        return false;
 		    }
 		};
 		
 		
-		sorter = new TableRowSorter<TableModel>(model);
+		sorter = new TableRowSorter<>(model);
 		table.setModel(model);
 		table.setRowSorter(sorter);
 		
@@ -331,8 +333,8 @@ public class AccountManager {
 		try {
 			return accountService.getAllAccounts();
 		} catch (ServiceException e) {
-			LOGGER.error("Error",e);
-			JOptionPane.showMessageDialog(frame, "Ocurrió un error al intentar recuperar las Cuentas!", "Mensaje",Utils.MESSAGE_ERROR);
+			LOGGER.error(ERROR_TEXT,e);
+			JOptionPane.showMessageDialog(frame, "Ocurrió un error al intentar recuperar las Cuentas!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 		}
 		
 		return null;

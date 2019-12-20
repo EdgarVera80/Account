@@ -34,6 +34,9 @@ public class AccountForm extends JDialog{
 	 */
 	private static final long serialVersionUID = -8533448513124469814L;
 
+	private static final String ERROR_TEXT="Error";
+	private static final String MENSAGE_TEXT="Mensaje";
+	
 	private JTextField txtAccount;
 	private JTextArea txaInfo;
 	private JButton btnSave ;
@@ -111,7 +114,7 @@ public class AccountForm extends JDialog{
 		String info=txaInfo.getText().trim();
 		
 		if(cuenta.trim().length()==0) {
-			JOptionPane.showMessageDialog(this, "El campo Cuenta es obligatorio!", "Mensaje",Utils.MESSAGE_WARNING);
+			JOptionPane.showMessageDialog(this, "El campo Cuenta es obligatorio!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 			txtAccount.requestFocus();
 			return;
 		}
@@ -121,26 +124,26 @@ public class AccountForm extends JDialog{
 			account.setInformation(info);
 			try {
 				if(accountService.existWithOtherId(account.getAccount(), account.getId())){
-					JOptionPane.showMessageDialog(this, "Ya existe un registro con el mismo nombre de cuenta!", "Mensaje",Utils.MESSAGE_WARNING);
+					JOptionPane.showMessageDialog(this, "Ya existe un registro con el mismo nombre de cuenta!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 					return;
 				}
 				updateAccount();
 			} catch (ServiceException e) {
-				LOGGER.error("Error",e);
-				JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar actualizar el registro!", "Mensaje",Utils.MESSAGE_ERROR);
+				LOGGER.error(ERROR_TEXT,e);
+				JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar actualizar el registro!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 			}
 		}else {
 			try {
 				if(accountService.existAccountName(cuenta)){
-					JOptionPane.showMessageDialog(this, "Ya existe un registro con el mismo nombre de cuenta!", "Mensaje",Utils.MESSAGE_WARNING);
+					JOptionPane.showMessageDialog(this, "Ya existe un registro con el mismo nombre de cuenta!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 					return;
 				}
 				String date = simpleDateFormat.format(new Date());
 				account=new Account(cuenta,date,info);
 				saveAccount();
 			} catch (ServiceException e) {
-				LOGGER.error("Error",e);
-				JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el registro!", "Mensaje",Utils.MESSAGE_ERROR);
+				LOGGER.error(ERROR_TEXT,e);
+				JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el registro!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 			}
 		}
 	}
@@ -148,14 +151,14 @@ public class AccountForm extends JDialog{
 	public void saveAccount() throws ServiceException {
 		this.accountService.saveAccount(account);
 		params.setStatus(Utils.SUCCCESS);
-		JOptionPane.showMessageDialog(this, "El registro ha sido guardado correctamente!", "Mensaje",Utils.MESSAGE_INFO);
+		JOptionPane.showMessageDialog(this, "El registro ha sido guardado correctamente!", MENSAGE_TEXT,Utils.MESSAGE_INFO);
 		dispose();
 	}
 	
 	public void updateAccount() throws ServiceException{
 		this.accountService.updateAccount(account);
 		params.setStatus(Utils.SUCCCESS);
-		JOptionPane.showMessageDialog(this, "El registro ha sido actualizado correctamente!", "Mensaje",Utils.MESSAGE_INFO);
+		JOptionPane.showMessageDialog(this, "El registro ha sido actualizado correctamente!", MENSAGE_TEXT,Utils.MESSAGE_INFO);
 		dispose();
 	}
 	
@@ -176,8 +179,8 @@ public class AccountForm extends JDialog{
 				txaInfo.setText(account.getInformation());
 			}
 		} catch (ServiceException e) {
-			LOGGER.error("Error",e);
-			JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar obtener la cuenta!", "Mensaje",Utils.MESSAGE_ERROR);
+			LOGGER.error(ERROR_TEXT,e);
+			JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar obtener la cuenta!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 		}
 	}
 }

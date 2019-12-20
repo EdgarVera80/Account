@@ -28,6 +28,11 @@ public class AccountDetailForm extends JDialog{
 	 * 
 	 */
 	private static final long serialVersionUID = 8653794636729318109L;
+	
+	private static final String ERROR_TEXT="Error";
+	private static final String MENSAGE_TEXT="Mensaje";
+	
+	
 	private JTextField txtProperty;
 	private JTextField txtValue;
 	private JButton btnSave;
@@ -103,12 +108,12 @@ public class AccountDetailForm extends JDialog{
 		String value=txtValue.getText().trim();
 		
 		if(property.length()==0) {
-			JOptionPane.showMessageDialog(this, "El campo Propiedad es obligatorio!", "Mensaje",Utils.MESSAGE_WARNING);
+			JOptionPane.showMessageDialog(this, "El campo Propiedad es obligatorio!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 			txtProperty.requestFocus();
 			return;
 		}
 		if(value.length()==0) {
-			JOptionPane.showMessageDialog(this, "El campo Valor es obligatorio!", "Mensaje",Utils.MESSAGE_WARNING);
+			JOptionPane.showMessageDialog(this, "El campo Valor es obligatorio!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 			txtProperty.requestFocus();
 			return;
 		}
@@ -118,25 +123,25 @@ public class AccountDetailForm extends JDialog{
 			accountDetail.setValue(value);
 			try {
 				if(accountDetailService.existPropertyByAccountIdExceptId(property, accountDetail.getAccountId(), accountDetail.getId())){
-					JOptionPane.showMessageDialog(this, "Ya existe un registro con el nombre de propiedad!", "Mensaje",Utils.MESSAGE_WARNING);
+					JOptionPane.showMessageDialog(this, "Ya existe un registro con el nombre de propiedad!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 					return;
 				}
 				updateAccountDetail();
 			} catch (ServiceException e) {
-				LOGGER.error("Error",e);
-				JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar actualizar el registro!", "Mensaje",Utils.MESSAGE_ERROR);
+				LOGGER.error(ERROR_TEXT,e);
+				JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar actualizar el registro!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 			}
 		}else {
 			try {
 				if(accountDetailService.existProperty(property,params.getAccountId())){
-					JOptionPane.showMessageDialog(this, "Ya existe un registro con el mismo nombre de propiedad!", "Mensaje",Utils.MESSAGE_WARNING);
+					JOptionPane.showMessageDialog(this, "Ya existe un registro con el mismo nombre de propiedad!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 					return;
 				}
 				accountDetail=new AccountDetail(params.getAccountId(),property,value);
 				saveAccountDetail();
 			} catch (ServiceException e) {
-				LOGGER.error("Error",e);
-				JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el registro!", "Mensaje",Utils.MESSAGE_ERROR);
+				LOGGER.error(ERROR_TEXT,e);
+				JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar guardar el registro!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 			}
 		}
 	}
@@ -144,14 +149,14 @@ public class AccountDetailForm extends JDialog{
 	public void saveAccountDetail() throws ServiceException {
 		this.accountDetailService.saveAccountDetail(accountDetail);
 		params.setStatus(Utils.SUCCCESS);
-		JOptionPane.showMessageDialog(this, "El registro ha sido guardado correctamente!", "Mensaje",Utils.MESSAGE_INFO);
+		JOptionPane.showMessageDialog(this, "El registro ha sido guardado correctamente!", MENSAGE_TEXT,Utils.MESSAGE_INFO);
 		dispose();
 	}
 	
 	public void updateAccountDetail() throws ServiceException {
 		this.accountDetailService.updateAccountDetail(accountDetail);
 		params.setStatus(Utils.SUCCCESS);
-		JOptionPane.showMessageDialog(this, "El registro ha sido actualizado correctamente!", "Mensaje",Utils.MESSAGE_INFO);
+		JOptionPane.showMessageDialog(this, "El registro ha sido actualizado correctamente!", MENSAGE_TEXT,Utils.MESSAGE_INFO);
 		dispose();
 	}
 	
@@ -172,8 +177,8 @@ public class AccountDetailForm extends JDialog{
 				txtValue.setText(accountDetail.getValue());
 			}
 		} catch (ServiceException e) {
-			LOGGER.error("Error",e);
-			JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar recuperta el registro!", "Mensaje",Utils.MESSAGE_ERROR);
+			LOGGER.error(ERROR_TEXT,e);
+			JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar recuperta el registro!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 		}
 	}
 	
