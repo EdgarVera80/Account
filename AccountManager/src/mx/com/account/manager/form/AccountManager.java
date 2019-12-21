@@ -285,7 +285,6 @@ public class AccountManager {
 		});
 	}
 	
-	
 	private void loadTable() {
 		String[] columnNames = {" ","Id","Cuenta","Creación", "Información" };
 		
@@ -298,8 +297,7 @@ public class AccountManager {
 			private static final long serialVersionUID = 1L;
 
 			@Override 
-		    public boolean isCellEditable(int row, int column)
-		    {
+		    public boolean isCellEditable(int row, int column){
 		        return false;
 		    }
 		};
