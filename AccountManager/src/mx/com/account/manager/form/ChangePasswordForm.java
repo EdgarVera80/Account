@@ -31,6 +31,9 @@ public class ChangePasswordForm extends JDialog {
 	 */
 	private static final long serialVersionUID = 1976001226448951813L;
 
+	private static final String ERROR_TEXT="Error";
+	private static final String MENSAGE_TEXT="Mensaje";
+	
 	private JPasswordField txtPassword;
 	private JPasswordField txtNewPassword;
 	private JPasswordField txtConfirmPassword;
@@ -122,21 +125,21 @@ public class ChangePasswordForm extends JDialog {
 			user.setPassword(passHash);
 			boolean validUser=userService.validUser(user);
 			if(!validUser) {
-				JOptionPane.showMessageDialog(getLayeredPane(), "El password acctual es incorrecto!", "Mensaje",Utils.MESSAGE_WARNING);
+				JOptionPane.showMessageDialog(getLayeredPane(), "El password acctual es incorrecto!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 				txtPassword.setText("");
 				txtPassword.requestFocus();
 				return;
 			}
 			
 			String newPassword=new String(this.txtNewPassword.getPassword());
-			if(newPassword==null || newPassword.trim().length()==0) {
-				JOptionPane.showMessageDialog(getLayeredPane(), "Debe ingresar el nuevo password!", "Mensaje",Utils.MESSAGE_WARNING);
+			if(newPassword.trim().length()==0) {
+				JOptionPane.showMessageDialog(getLayeredPane(), "Debe ingresar el nuevo password!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 				txtNewPassword.requestFocus();
 				return;
 			}
 			String confirmPassword=new String(this.txtConfirmPassword.getPassword());
 			if(!newPassword.equals(confirmPassword)) {
-				JOptionPane.showMessageDialog(getLayeredPane(), "Los password no coinciden!", "Mensaje",Utils.MESSAGE_WARNING);
+				JOptionPane.showMessageDialog(getLayeredPane(), "Los password no coinciden!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 				txtNewPassword.setText("");
 				txtConfirmPassword.setText("");
 				txtNewPassword.requestFocus();
@@ -147,14 +150,14 @@ public class ChangePasswordForm extends JDialog {
 			user.setPassword(newPassword);
 			userService.changePassword(user);
 			
-			JOptionPane.showMessageDialog(getLayeredPane(), "El password ha sido cambiado correctamente!", "Mensaje",Utils.MESSAGE_INFO);
+			JOptionPane.showMessageDialog(getLayeredPane(), "El password ha sido cambiado correctamente!", MENSAGE_TEXT,Utils.MESSAGE_INFO);
 			setVisible(false);
 		} catch (SecurityExceptionHandler e) {
-			LOGGER.error("Error",e);
-			JOptionPane.showMessageDialog(getLayeredPane(), "Ocurrió un error al validar el usuario!", "Mensaje",Utils.MESSAGE_ERROR);
+			LOGGER.error(ERROR_TEXT,e);
+			JOptionPane.showMessageDialog(getLayeredPane(), "Ocurrió un error al validar el usuario!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 		} catch (ServiceException e) {
-			LOGGER.error("Error",e);
-			JOptionPane.showMessageDialog(getLayeredPane(), "Ocurrió un error al validar el usuario!", "Mensaje",Utils.MESSAGE_ERROR);
+			LOGGER.error(ERROR_TEXT,e);
+			JOptionPane.showMessageDialog(getLayeredPane(), "Ocurrió un error al validar el usuario!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 		}
 	}
 }

@@ -43,6 +43,9 @@ public class LoginForm extends JDialog{
 	 */
 	private static final long serialVersionUID = 2717827534659727091L;
 	
+	private static final String ERROR_TEXT="Error";
+	private static final String MENSAGE_TEXT="Mensaje";
+	
 	private JButton btnAccept = new JButton("Aceptar");
 	private JButton btnCancel = new JButton("Cancelar");
 	private JTextField txtUser = new JTextField();
@@ -168,6 +171,9 @@ public class LoginForm extends JDialog{
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
+				/**
+				 * Unused
+				 */
 			}
 			
 			@Override
@@ -196,7 +202,7 @@ public class LoginForm extends JDialog{
 		String pass=new String(this.txtPassword.getPassword());
 		
 		if(user.length()==0 || pass.length()==0) {
-			JOptionPane.showMessageDialog(this, "Usuario o Password incorrecto!", "Mensaje",Utils.MESSAGE_WARNING);
+			JOptionPane.showMessageDialog(this, "Usuario o Password incorrecto!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 			this.txtUser.setText("");
 			this.txtPassword.setText("");
 			this.txtUser.requestFocus();
@@ -210,14 +216,14 @@ public class LoginForm extends JDialog{
 				this.user.setUser(userHash);
 				dispose();
 			}else {
-				JOptionPane.showMessageDialog(this, "Usuario o Password incorrecto!", "Mensaje",Utils.MESSAGE_WARNING);
+				JOptionPane.showMessageDialog(this, "Usuario o Password incorrecto!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 				this.txtUser.setText("");
 				this.txtPassword.setText("");
 				this.txtUser.requestFocus();
 			}
 		} catch (ServiceException|SecurityExceptionHandler e) {
-			LOGGER.error("Error",e);
-			JOptionPane.showMessageDialog(this, "Ocurrió un error al validar el usuario!", "Mensaje",Utils.MESSAGE_ERROR);
+			LOGGER.error(ERROR_TEXT,e);
+			JOptionPane.showMessageDialog(this, "Ocurrió un error al validar el usuario!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 		}
 	}
 }

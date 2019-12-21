@@ -35,7 +35,9 @@ public class AccountDetailManager extends JDialog{
 	 * 
 	 */
 	private static final long serialVersionUID = 673664602183140763L;
-
+	private static final String ERROR_TEXT="Error";
+	private static final String MENSAGE_TEXT="Mensaje";
+	
 	private TableModel model;
 	private JTable table;
 	private TableRowSorter <TableModel> sorter;
@@ -45,7 +47,7 @@ public class AccountDetailManager extends JDialog{
 	private JMenuItem smnDelete;
 	private AccountDetailService accountDetailService;
 	private Integer accountId;
-	private boolean delete=false;
+	private boolean delete;
 	
 	public AccountDetailManager() {
 		accountDetailService=new AccountDetailServiceImpl();
@@ -95,12 +97,12 @@ public class AccountDetailManager extends JDialog{
 	private void loadTable() {
 		String[] columnNames = {" ","Id","AccountId","Propiedad", "Valor" };
 		Object[][] rowData = getData(accountId);
-		if(rowData==null && delete==false) {
-			JOptionPane.showMessageDialog(getLayeredPane(), "No se encontró ningún registro!", "Mensaje",Utils.MESSAGE_WARNING);
+		if(rowData==null && !delete) {
+			JOptionPane.showMessageDialog(getLayeredPane(), "No se encontró ningún registro!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 		}
 		model = new DefaultTableModel(rowData, columnNames);
 		
-		sorter = new TableRowSorter<TableModel>(model);
+		sorter = new TableRowSorter<>(model);
 		table.setModel(model);
 		table.setRowSorter(sorter);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -155,7 +157,7 @@ public class AccountDetailManager extends JDialog{
 						loadTable();
 					}
 				}else{
-					JOptionPane.showMessageDialog(getLayeredPane(), "Debe seleccionar un registro!", "Mensaje",Utils.MESSAGE_WARNING);
+					JOptionPane.showMessageDialog(getLayeredPane(), "Debe seleccionar un registro!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 				}
 			}
 		});
@@ -176,12 +178,12 @@ public class AccountDetailManager extends JDialog{
 							delete=true;
 							loadTable();
 						} catch (ServiceException e1) {
-							LOGGER.error("Error",e1);
-							JOptionPane.showMessageDialog(getLayeredPane(), "Ocurrió un error al intentar eliminar el registro!", "Mensaje",Utils.MESSAGE_ERROR);
+							LOGGER.error(ERROR_TEXT,e1);
+							JOptionPane.showMessageDialog(getLayeredPane(), "Ocurrió un error al intentar eliminar el registro!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 						}
 					}				
 				}else{
-					JOptionPane.showMessageDialog(getLayeredPane(), "Debe seleccionar un registro!", "Mensaje",Utils.MESSAGE_WARNING);
+					JOptionPane.showMessageDialog(getLayeredPane(), "Debe seleccionar un registro!", MENSAGE_TEXT,Utils.MESSAGE_WARNING);
 				}
 			}
 		});
@@ -192,8 +194,8 @@ public class AccountDetailManager extends JDialog{
 		try {
 			lista = accountDetailService.getAllByAccountId(accountId);
 		} catch (ServiceException e) {
-			LOGGER.error("Error",e);
-			JOptionPane.showMessageDialog(getLayeredPane(), "Ocurrió un error al recuperar el registro!", "Mensaje",Utils.MESSAGE_ERROR);
+			LOGGER.error(ERROR_TEXT,e);
+			JOptionPane.showMessageDialog(getLayeredPane(), "Ocurrió un error al recuperar el registro!", MENSAGE_TEXT,Utils.MESSAGE_ERROR);
 		}
 		return lista;
 	}
